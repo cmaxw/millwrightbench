@@ -4,7 +4,7 @@ description: "Placeholder post demonstrating the Writing front matter, the artic
 date: 2026-08-22
 lastmod: 2026-08-22
 topics: ["ai-policy", "legislation"]
-draft: false
+draft: true
 ---
 
 <!-- TODO: replace -->
