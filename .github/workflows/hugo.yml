@@ -48,7 +48,12 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        # No --baseURL override: hugo.toml already sets the canonical
+        # https://millwrightbench.com/. The Pages base_url output reports the
+        # *current* Pages URL, which was the project path before the custom
+        # domain existed and is http:// until HTTPS enforcement is on — either
+        # would bake wrong absolute URLs into the output.
+        run: hugo --gc --minify
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
