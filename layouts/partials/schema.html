@@ -1,0 +1,63 @@
+{{- /*
+  JSON-LD, one block per page kind:
+    Home        -> ProfessionalService (both practices as serviceType)
+    /about/     -> Person (the canonical @id every other block points at)
+    /writing/x/ -> Article, author referencing that Person @id
+
+  Each block is built as a Go map and run through `jsonify`, so quoting and
+  escaping are handled by Hugo rather than by hand.
+*/ -}}
+
+{{- $personID := printf "%s#person" (absURL "about/") -}}
+
+{{- if .IsHome -}}
+{{- $svc := dict
+      "@context" "https://schema.org"
+      "@type" "ProfessionalService"
+      "@id" (printf "%s#practice" site.BaseURL)
+      "name" site.Title
+      "url" site.BaseURL
+      "description" site.Params.description
+      "email" site.Params.email
+      "founder" (dict "@id" $personID)
+      "areaServed" (slice (dict "@type" "Country" "name" "United States"))
+      "serviceType" (slice
+        "AI application development"
+        "AI developer tooling"
+        "AI implementation consulting")
+-}}
+<script type="application/ld+json">{{ $svc | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+
+{{- if eq .Section "about" -}}
+{{- $person := dict
+      "@context" "https://schema.org"
+      "@type" "Person"
+      "@id" $personID
+      "name" site.Params.author
+      "jobTitle" site.Params.jobTitle
+      "url" (absURL "about/")
+      "email" site.Params.email
+      "sameAs" site.Params.social
+      "affiliation" (dict "@type" "Organization" "name" site.Title "url" site.BaseURL)
+-}}
+<script type="application/ld+json">{{ $person | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+
+{{- if and .IsPage (eq .Section "writing") -}}
+{{- $article := dict
+      "@context" "https://schema.org"
+      "@type" "Article"
+      "headline" .Title
+      "description" .Description
+      "url" .Permalink
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+      "datePublished" (.Date.Format "2006-01-02")
+      "dateModified" (.Lastmod.Format "2006-01-02")
+      "wordCount" .WordCount
+      "keywords" (delimit (default (slice) .Params.topics) ", ")
+      "author" (dict "@type" "Person" "@id" $personID "name" site.Params.author)
+      "publisher" (dict "@type" "Organization" "name" site.Title "url" site.BaseURL)
+-}}
+<script type="application/ld+json">{{ $article | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}

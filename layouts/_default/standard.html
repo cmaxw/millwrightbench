@@ -1,0 +1,29 @@
+{{- /*
+  Standard content page: /build/, /policy/, /speaking/, /about/, /contact/.
+
+  These live at content/<section>/_index.md, so Hugo treats them as SECTION
+  pages. Their front matter sets `layout: "standard"` to reach this file.
+
+  It is deliberately NOT named page.html: `page`, `section`, `list`, `home`,
+  `term`, and `taxonomy` are reserved kind names in Hugo's template lookup, so
+  a section page can never resolve a layout called "page" — it would silently
+  fall through to _default/list.html and render as the Writing index instead.
+*/ -}}
+{{ define "main" }}
+<article class="page">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+  </header>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  {{- /* Which pages get a CTA. Contact is itself the booking page and does not
+         need to link to itself; About has none by design. The copy for each
+         comes from that page's own `params.cta` — Policy in particular keeps
+         its plain line and email address by overriding label and url to empty,
+         which suppresses the button. */}}
+  {{ if in (slice "build" "compliance" "speaking" "policy") .Section }}
+    {{ partial "cta.html" (dict "page" .) }}
+  {{ end }}
+</article>
+{{ end }}

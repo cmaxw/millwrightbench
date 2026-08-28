@@ -1,0 +1,20 @@
+{{- /* A Writing post. The only content type that is a true single page. */ -}}
+{{ define "main" }}
+<article class="post">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    <p class="post-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+      {{- with .Params.topics }}
+      <span class="topics">{{ delimit . ", " }}</span>
+      {{- end }}
+    </p>
+  </header>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  <footer class="post-footer">
+    <p><a href="{{ "/writing/" | relURL }}">&larr; All writing</a></p>
+  </footer>
+</article>
+{{ end }}

@@ -1,0 +1,37 @@
+{{- /*
+  Booking CTA.
+
+  Copy resolves site default -> page override, key by key: [params.cta] in
+  hugo.toml supplies `line`, `label`, and `url`, and any page may override any
+  subset of them in its own front matter under `params.cta`. Overriding just
+  the line keeps the default label and link.
+
+  Context is a dict, not the page:
+    {{ partial "cta.html" (dict "page" .) }}
+    {{ partial "cta.html" (dict "page" . "class" "home-cta") }}
+
+  `line` is rendered as inline markdown; `label` is plain text.
+
+  `class` sets the wrapper class and defaults to "cta". The home page uses
+  "home-cta" because it sits after the credibility line and does not want the
+  rule that .cta draws above itself.
+
+  WHERE the CTA appears is decided by the caller, not here — see the section
+  gate in layouts/_default/standard.html.
+*/ -}}
+{{- $page := .page -}}
+{{- $class := .class | default "cta" -}}
+{{- $cta := merge (site.Params.cta | default dict) ($page.Params.cta | default dict) -}}
+{{- with $cta }}
+<aside class="{{ $class }}">
+  {{- with .line }}
+  {{- /* RenderString with display:inline runs the line through Goldmark
+         without wrapping it in its own <p>, so the line can carry markdown
+         (a mailto link, emphasis) inside the <p> below. */}}
+  <p class="cta-line">{{ $page.RenderString (dict "display" "inline") . }}</p>
+  {{- end }}
+  {{- if and .label .url }}
+  <p><a class="button" href="{{ .url | relURL }}">{{ .label }}</a></p>
+  {{- end }}
+</aside>
+{{- end }}

@@ -1,0 +1,41 @@
+# Millwright
+
+> Millwright is the practice of Charles Max Wood ("Chuck"): building AI-powered
+> applications and AI developer tooling, and writing on the technology
+> underneath AI policy and legislation.
+
+<!-- TODO: replace the summary above and the descriptions below once the real
+     copy is written. Keep this file short — it is a map, not a brochure. -->
+
+Chuck is a software engineer and consultant based in Utah. He works with
+engineering teams implementing AI, and writes about how AI systems actually
+behave for audiences that include legislators and legislative staff. He also
+serves as Vice Chair of the Utah County Republican Party. Separately, he runs
+Top End Devs (https://topenddevs.com/), an independent developer media
+business that is not part of Millwright.
+
+## Practices
+
+- [Build](https://millwrightbench.com/build/): AI application development, AI
+  developer tooling, and implementation consulting for engineering teams. This
+  is the commercial side of the practice.
+- [Policy](https://millwrightbench.com/policy/): technical perspective on AI
+  and legislation. This is a point of view, not a service offering — Chuck does
+  not sell policy advocacy or lobbying from this site.
+
+## Pages
+
+- [Home](https://millwrightbench.com/)
+- [Build](https://millwrightbench.com/build/)
+- [Policy](https://millwrightbench.com/policy/)
+- [Writing](https://millwrightbench.com/writing/): essays on building AI
+  systems and on the technology underneath AI policy. RSS:
+  https://millwrightbench.com/writing/index.xml
+- [Speaking](https://millwrightbench.com/speaking/): talks for developer
+  audiences and briefings for civic and legislative audiences.
+- [About](https://millwrightbench.com/about/): background and affiliations.
+- [Contact](https://millwrightbench.com/contact/)
+
+## Contact
+
+chuck@millwrightbench.com

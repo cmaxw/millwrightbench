@@ -1,0 +1,60 @@
+{{- /*
+  Home. Several unrelated audiences land here, so the page forks rather than
+  pitching once. Copy comes from content/_index.md: `.Content` is the
+  positioning statement, and the fork/credibility copy comes from the page
+  params defined in that file's front matter. Each path here must have a
+  matching block below or its copy is silently dropped.
+
+  The paths are presented uniformly: same heading weight, and each ends in a
+  button. (They were once asymmetric, with policy as a quieter plain link.)
+*/ -}}
+{{ define "main" }}
+<div class="home">
+
+  <section class="positioning">
+    <h1>{{ site.Title }}</h1>
+    <div class="prose lede">
+      {{ .Content }}
+    </div>
+  </section>
+
+  <section class="fork" aria-label="Practices">
+
+    {{- with .Params.build }}
+    <section class="path path-build">
+      <h2>{{ .heading }}</h2>
+      <p>{{ .body }}</p>
+      <p><a class="button" href="{{ .link_url | relURL }}">{{ .link_label }}</a></p>
+    </section>
+    {{- end }}
+
+    {{- with .Params.compliance }}
+    <section class="path path-compliance">
+      <h2>{{ .heading }}</h2>
+      <p>{{ .body }}</p>
+      <p><a class="button" href="{{ .link_url | relURL }}">{{ .link_label }}</a></p>
+    </section>
+    {{- end }}
+
+    {{- with .Params.policy }}
+    <section class="path path-policy">
+      <h2>{{ .heading }}</h2>
+      <p>{{ .body }}</p>
+      <p><a class="button" href="{{ .link_url | relURL }}">{{ .link_label }}</a></p>
+    </section>
+    {{- end }}
+
+  </section>
+
+  {{- with .Params.credibility }}
+  <section class="credibility">
+    <p>{{ . }}</p>
+  </section>
+  {{- end }}
+
+  {{- /* Copy comes from [params.cta] in hugo.toml, with the home page's own
+         `params.cta` override in content/_index.md layered on top. */}}
+  {{ partial "cta.html" (dict "page" . "class" "home-cta") }}
+
+</div>
+{{ end }}

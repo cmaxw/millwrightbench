@@ -1,0 +1,91 @@
+baseURL = "https://millwrightbench.com/"
+locale = "en-us"                           # replaces languageCode, deprecated in Hugo 0.158
+title = "Millwright"
+enableRobotsTXT = false                    # robots.txt is hand-written in static/
+enableEmoji = false
+
+# Taxonomy list/term pages are suppressed at launch — see §4 of the build spec.
+disableKinds = ["taxonomy", "term"]
+
+# Requires Hugo >= 0.125 (sitemap became an output format in that release).
+# No npm, no theme, no asset pipeline: `hugo` is the only dependency.
+
+[pagination]
+  pagerSize = 20
+
+[params]
+  # Used for the meta-description fallback, JSON-LD, and the footer.
+  tagline = "AI implementation, tooling, and technical perspective on AI policy."
+  description = "Millwright is Charles Max Wood's practice: building AI-powered applications and developer tooling, and writing on the technology behind AI legislation."
+  author = "Charles Max Wood"
+  jobTitle = "Software Engineer and Consultant"
+  email = "chuck@millwrightbench.com"
+  bookingURL = "https://topenddevs.com/schedule/cmaxw"
+  # sameAs array for the Person JSON-LD on /about/.
+  social = [
+    "https://topenddevs.com/",
+    "https://www.linkedin.com/in/charlesmaxwood",
+    "https://github.com/cmaxw",
+  ]
+
+  # Site-wide default for the booking CTA. Any page may override any of these
+  # three keys in its own front matter under `params.cta`; keys left out fall
+  # back to the values here. See layouts/partials/cta.html.
+  [params.cta]
+    line = "If you have something you're working on, book a time and we'll talk it through. No pitch, and if I'm not the right person for it I'll tell you."
+    label = "Book a call"
+    url = "/contact/"
+
+# Nav order per spec: Build first, Book a Call last and visually distinct.
+[menus]
+  [[menus.main]]
+    name = "Build"
+    pageRef = "/build"
+    weight = 10
+  [[menus.main]]
+    name = "Compliance"
+    pageRef = "/compliance"
+    weight = 15
+  [[menus.main]]
+    name = "Policy"
+    pageRef = "/policy"
+    weight = 20
+  [[menus.main]]
+    name = "Writing"
+    pageRef = "/writing"
+    weight = 30
+  [[menus.main]]
+    name = "Speaking"
+    pageRef = "/speaking"
+    weight = 40
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 50
+  [[menus.main]]
+    name = "Book a Call"
+    pageRef = "/contact"
+    weight = 60
+    [menus.main.params]
+      cta = true
+
+# RSS is enabled per-section rather than site-wide: content/writing/_index.md
+# sets `outputs: ["HTML", "RSS"]`. Everything else is HTML only.
+[outputs]
+  home = ["html", "sitemap"]
+  section = ["html"]
+  page = ["html"]
+
+[sitemap]
+  changefreq = "monthly"
+  priority = 0.5
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true          # allows raw HTML in markdown (calendar embed, TODO comments)
+  [markup.highlight]
+    noClasses = false
+    lineNos = false
+
+[taxonomies]
+  topic = "topics"         # single flat taxonomy

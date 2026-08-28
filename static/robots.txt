@@ -1,0 +1,39 @@
+# Millwright — millwrightbench.com
+# All crawlers, including AI training and retrieval crawlers, are allowed.
+# The Writing section is the credibility engine for this practice; being
+# citable is the point. Flip any block below to `Disallow: /` to opt out.
+
+User-agent: *
+Allow: /
+
+# --- AI crawlers, listed explicitly so the choice is on the record ---
+
+# OpenAI, model training
+User-agent: GPTBot
+Allow: /
+
+# OpenAI, ChatGPT browsing / user-initiated retrieval
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google, AI training and Gemini grounding (separate from Googlebot)
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl — the corpus most other models are trained from
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://millwrightbench.com/sitemap.xml

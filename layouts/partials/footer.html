@@ -1,0 +1,17 @@
+<footer class="site-footer">
+  <div class="wrap">
+    {{- /* Mark only, muted. 366 bytes inlined; see header.html on why not <img>. */}}
+    <div class="footer-mark" aria-hidden="true">
+      {{ readFile "static/img/millwright-mark.svg" | safeHTML }}
+    </div>
+    <p class="footer-contact">
+      <a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a>
+    </p>
+    <p class="footer-affiliations">
+      Vice Chair, Utah County Republican Party
+    </p>
+    <p class="footer-legal">
+      &copy; {{ now.Year }} {{ site.Params.author }}. All rights reserved.
+    </p>
+  </div>
+</footer>

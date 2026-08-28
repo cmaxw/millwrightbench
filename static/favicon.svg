@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Millwright">
+  <rect width="64" height="64" rx="8" fill="#1d4e77"/>
+  <g fill="#ffffff" transform="translate(8 20.28) scale(0.2791)">
+    <rect x="0" y="0" width="172" height="20"/>
+    <rect x="6" y="20" width="16" height="22"/>
+    <path d="M30 20 H42 L34 84 H22 Z"/>
+    <path d="M130 20 H142 L150 84 H138 Z"/>
+    <rect x="36" y="54" width="100" height="9"/>
+  </g>
+</svg>

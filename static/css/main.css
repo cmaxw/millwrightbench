@@ -1,0 +1,318 @@
+/* Millwright — single hand-written stylesheet. No build step, no framework.
+   Conventional, text-forward, one accent color, one breakpoint. */
+
+:root {
+  --ink:        #1a1a1a;   /* body text */
+  --ink-muted:  #5a5f66;   /* dates, meta, footer */
+  --rule:       #dcdfe3;   /* hairlines */
+  --bg:         #ffffff;
+  --bg-subtle:  #f6f7f8;
+  --accent:     #1d4e77;   /* the one accent — links, CTA, current nav item */
+  --accent-dk:  #143857;
+
+  --measure:    36rem;     /* ~68 characters at this font size */
+  --wrap:       46rem;     /* page frame, wider than the measure */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+          Arial, "Noto Sans", sans-serif;
+}
+
+/* ---------- base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+main {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+}
+
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+a:hover, a:focus { color: var(--accent-dk); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 0.5rem;
+  z-index: 10;
+  background: var(--bg);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--rule);
+}
+
+/* ---------- header ---------- */
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  padding: 1.25rem 0;
+}
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;            /* not baseline: the lockup is a block SVG with no
+                                     text baseline, so flexbox would synthesize
+                                     one from its bottom edge and ride high */
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+/* Inlined horizontal lockup (620x84). Sized by width; the SVG inherits
+   `color` because every shape in it is fill="currentColor". */
+.wordmark {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 0;                /* kills the inline-SVG descender gap */
+}
+.wordmark svg {
+  display: block;
+  width: 11.5rem;
+  height: auto;
+}
+.wordmark:hover, .wordmark:focus-visible { color: var(--accent); }
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  /* Tightened from 1.25rem so the seven-item nav clears the lockup on one
+     line at the 46rem measure. */
+  gap: 0.4rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* The prose `li` margin-bottom would otherwise pad the nav box below the
+   items and knock it out of true against the lockup. */
+.site-nav li { margin-bottom: 0; }
+.site-nav a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-size: 0.875rem;           /* see the gap note above */
+}
+.site-nav a:hover,
+.site-nav a[aria-current="page"] { color: var(--accent); }
+
+/* The CTA is the one nav item that is not plain text. */
+.site-nav .nav-cta {
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.35rem 0.75rem;
+  border-radius: 3px;
+}
+.site-nav .nav-cta:hover { background: var(--accent-dk); color: var(--bg); }
+/* On /contact/ the CTA is also the current page. The aria-current rule above
+   scores higher than `.site-nav .nav-cta`, so without this the label is
+   painted accent-on-accent and vanishes into the button. */
+.site-nav .nav-cta[aria-current="page"] { color: var(--bg); }
+
+/* ---------- typography ---------- */
+
+h1, h2, h3 {
+  line-height: 1.25;
+  font-weight: 600;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: 1.875rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.3125rem; margin-top: 2.25em; }
+h3 { font-size: 1.0625rem; margin-top: 1.75em; }
+
+.page-header { margin-bottom: 2rem; }
+.page-header h1 { margin-bottom: 0.25rem; }
+
+p, ul, ol, blockquote { max-width: var(--measure); }
+p { margin: 0 0 1.15em; }
+
+ul, ol { padding-left: 1.25rem; }
+li { margin-bottom: 0.35em; }
+
+blockquote {
+  margin: 1.5em 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--rule);
+  color: var(--ink-muted);
+}
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+code { background: var(--bg-subtle); padding: 0.1em 0.3em; border-radius: 2px; }
+pre {
+  background: var(--bg-subtle);
+  padding: 1rem;
+  border-radius: 3px;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; }
+
+img { max-width: 100%; height: auto; }
+
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--rule); }
+
+/* ---------- buttons and links ---------- */
+
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 3px;
+  font-size: 0.9375rem;
+}
+.button:hover, .button:focus { background: var(--accent-dk); color: var(--bg); }
+
+.textlink { font-size: 0.9375rem; }
+
+/* ---------- home ---------- */
+
+.positioning h1 {
+  font-size: 2.125rem;
+  margin-bottom: 1rem;
+}
+.lede { font-size: 1.125rem; }
+.lede p { max-width: var(--measure); }
+
+/* The fork stacks on every screen. The two paths are intentionally
+   asymmetric — the policy path is quieter — so they never read as a
+   matched pair of product cards. */
+.fork {
+  margin: 3rem 0;
+  border-top: 1px solid var(--rule);
+}
+.path {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.path h2 { margin-top: 0; }
+
+.credibility {
+  margin: 2.5rem 0;
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+}
+
+.home-cta { margin-top: 3rem; }
+.cta-line { margin-bottom: 1rem; }
+
+/* ---------- page CTA block ---------- */
+
+.cta {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- writing ---------- */
+
+.post-meta {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+.post-meta .topics::before { content: " · "; }
+
+.post-list {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  max-width: var(--measure);
+}
+.post-list-item {
+  margin: 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--rule);
+}
+.post-list-item h2 {
+  font-size: 1.1875rem;
+  margin: 0 0 0.25rem;
+}
+.post-list-item h2 a { text-decoration: none; }
+.post-list-item h2 a:hover { text-decoration: underline; }
+.post-summary { margin: 0.5rem 0 0; color: var(--ink-muted); }
+
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9375rem;
+}
+
+/* ---------- contact ---------- */
+
+.calendar-embed {
+  margin: 2rem 0;
+  min-height: 34rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1rem;
+  background: var(--bg-subtle);
+}
+.calendar-embed iframe { width: 100%; min-height: 32rem; border: 0; }
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 2rem 0 3rem;
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+}
+.site-footer p { margin: 0 0 0.5em; max-width: none; }
+.footer-legal { margin-bottom: 0; }
+
+/* Mark only, held well back — it is a sign-off, not a second logo. */
+.footer-mark {
+  color: var(--rule);
+  line-height: 0;
+  margin-bottom: 1.25rem;
+}
+.footer-mark svg {
+  display: block;
+  width: 4rem;
+  height: auto;
+}
+
+/* ---------- one breakpoint ---------- */
+
+@media (max-width: 34rem) {
+  body { font-size: 1rem; }
+  main { padding-top: 2rem; }
+  .site-header .wrap { flex-direction: column; align-items: flex-start; }
+  .wordmark svg { width: 9.5rem; }
+  .site-nav ul { gap: 0.5rem 1rem; }
+  h1 { font-size: 1.625rem; }
+  .positioning h1 { font-size: 1.75rem; }
+  .lede { font-size: 1.0625rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

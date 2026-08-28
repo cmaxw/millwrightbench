@@ -1,0 +1,32 @@
+{{- /* The Writing index. Also the fallback list template for any future section. */ -}}
+{{ define "main" }}
+<div class="page">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+  </header>
+  {{ with .Content }}
+  <div class="prose intro">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  <ul class="post-list">
+    {{- range .Pages.ByDate.Reverse }}
+    <li class="post-list-item">
+      <article>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+          {{- with .Params.topics }}
+          <span class="topics">{{ delimit . ", " }}</span>
+          {{- end }}
+        </p>
+        {{ with .Description }}<p class="post-summary">{{ . }}</p>{{ end }}
+      </article>
+    </li>
+    {{- else }}
+    <li class="post-list-item"><p>No posts yet.</p></li>
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

@@ -1,0 +1,16 @@
+{{- /*
+  Booking link for /contact/.
+
+  Markdown cannot read site params directly, so this shortcode exists to keep
+  the scheduling URL defined once, in [params] bookingURL, rather than pasted
+  into content. Renders nothing at all if bookingURL is unset, so the page
+  degrades to its surrounding copy instead of shipping a dead button.
+
+  Usage:  {{< booking >}}
+          {{< booking label="Pick a time" >}}
+*/ -}}
+{{- with site.Params.bookingURL }}
+<p><a class="button" href="{{ . }}">{{ $.Get "label" | default "Book a call" }}</a></p>
+{{- else }}
+{{- warnf "shortcode booking: site param bookingURL is not set; no link rendered on %s" $.Page.RelPermalink }}
+{{- end }}
